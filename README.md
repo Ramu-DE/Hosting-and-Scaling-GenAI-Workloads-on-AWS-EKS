@@ -1,4 +1,42 @@
-# Customizing LLMs on AWS EKS
+<h1 align="center">Hosting & Scaling GenAI Workloads on AWS EKS</h1>
+
+<p align="center">
+  <em>Deploy, optimize, customize, and scale Large Language Models on Amazon EKS with GPU-accelerated infrastructure.</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/AWS-EKS%20Auto%20Mode-FF9900?style=flat-square&logo=amazon-aws&logoColor=white" alt="AWS EKS">
+  <img src="https://img.shields.io/badge/GPU-NVIDIA%20L40S-76B900?style=flat-square&logo=nvidia&logoColor=white" alt="NVIDIA L40S">
+  <img src="https://img.shields.io/badge/Model-Ministral--3--8B-blue?style=flat-square" alt="Ministral-3-8B">
+</p>
+
+---
+
+## Repository map
+
+| Area | What it is |
+|------|-----------|
+| **[WORKSHOP-FLOW.md](./WORKSHOP-FLOW.md)** | Beginner-to-advanced walkthrough of every module, with Mermaid diagrams and real results |
+| **[evidence/](./evidence)** | Durable, auditable per-module execution records + hand-authored SVG flow diagrams |
+| **[CONCEPTS.md](./CONCEPTS.md)** | AI inference primer (inference, vLLM, KV cache, LoRA, RAG, agents, MoE) |
+| **[.deploy/](./.deploy)** | Working manifests actually applied (account/region/node-selector fixes, KubeRay RBAC) |
+| `100-vllm` … `800-ray` | The eight workshop modules (originals) |
+
+### Verified at a glance
+
+| Module | Result |
+|--------|--------|
+| 100 vLLM | Model served on L40S; real chat completion; public ALB |
+| 200 Agent | Tool-calling verified (`tool_calls` emitted) |
+| 300 Benchmark | 60 req / 0 fail; TTFT 85.9 ms, TPOT 25.1 ms |
+| 400 LMCache | L1 CPU + L2 Valkey (`rediss://`) both active |
+| 600 Fine-tune | LoRA loss 2.77→0.26, acc 97.7%; adapter served |
+| 700 RAG | 25 vectors in S3 Vectors; grounded answers |
+| 800 Ray | RayCluster ready (head + GPU worker); serve layer blocker documented |
+
+See **[evidence/README.md](./evidence/README.md)** for the full auditable record.
+
+---
 
 > **A hands-on workshop** for deploying, optimizing, and customizing Large Language Models on Amazon Elastic Kubernetes Service (EKS) using GPU-accelerated infrastructure.
 
