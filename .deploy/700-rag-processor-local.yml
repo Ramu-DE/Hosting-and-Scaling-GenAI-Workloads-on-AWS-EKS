@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rag-processor-local
+spec:
+  serviceAccountName: s3-access-sa
+  restartPolicy: Never
+  containers:
+  - name: processor
+    image: python:3.11-slim
+    command: ["/bin/bash","-c"]
+    args:
+    - |
+      apt-get update >/dev/null 2>&1 && apt-get install -y --no-install-recommends build-essential >/dev/null 2>&1
+      pip install --no-cache-dir boto3==1.43.43 >/dev/null 2>&1
+      pip install --no-cache-dir torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu >/dev/null 2>&1
+      pip install --no-cache-dir "transformers==4.44.2" "sentence-transformers==3.0.1" >/dev/null 2>&1
+      python - <<'PY'
+      import json, os, uuid, boto3
+      from sentence_transformers import SentenceTransformer
+      VBUCKET="rag-vectors-215808926717-us-east-2"; INDEX="knowledge-base"
+      print("Loading embedding model all-MiniLM-L6-v2 ...")
+      model = SentenceTransformer("all-MiniLM-L6-v2")
+      s3v = boto3.client("s3vectors", region_name="us-east-2")
+      vectors=[]; n=0
+      with open("/data/electronics.jsonl") as f:
+          for line in f:
+              line=line.strip()
+              if not line: continue
+              r=json.loads(line)
+              text=r.get("text",""); product=r.get("product",""); category=r.get("category","")
+              if not text: continue
+              combined=f"Product: {product}\nCategory: {category}\nDescription: {text}"
+              emb=model.encode(combined)
+              vectors.append({"key":str(uuid.uuid4()),"data":{"float32":emb.tolist()},
+                "metadata":{"text":text,"product":product,"category":category,"source":"electronics.jsonl",
+                            "rating":str(r.get("rating",0)),"price_range":r.get("price_range",""),"combined_text":combined}})
+              if len(vectors)>=100:
+                  s3v.put_vectors(vectorBucketName=VBUCKET,indexName=INDEX,vectors=vectors)
+                  n+=len(vectors); print(f"Uploaded batch, total={n}"); vectors=[]
+      if vectors:
+          s3v.put_vectors(vectorBucketName=VBUCKET,indexName=INDEX,vectors=vectors)
+          n+=len(vectors); print(f"Uploaded final batch, total={n}")
+      print(f"TOTAL VECTORS STORED: {n}")
+      # verify
+      q=model.encode("wireless headphones")
+      res=s3v.query_vectors(vectorBucketName=VBUCKET,indexName=INDEX,queryVector={"float32":q.tolist()},topK=2,returnMetadata=True,returnDistance=True)
+      print("VERIFY query returned", len(res.get("vectors",[])), "results")
+      for v in res.get("vectors",[]):
+          print("  ->", v.get("metadata",{}).get("product"), "dist=", round(v.get("distance",0),3))
+      PY
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+  - name: data
+    configMap:
+      name: rag-electronics-data

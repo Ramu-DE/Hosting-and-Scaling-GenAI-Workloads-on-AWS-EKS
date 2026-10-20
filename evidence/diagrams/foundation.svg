@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <rect width="760" height="420" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#232f3e">Foundation: EKS Auto Mode + Karpenter + GPU</text>
+
+  <!-- EKS cluster boundary -->
+  <rect x="20" y="50" width="720" height="340" rx="10" fill="#f2f8fd" stroke="#2a6ebb" stroke-width="2"/>
+  <text x="34" y="72" font-size="13" font-weight="bold" fill="#2a6ebb">Amazon EKS cluster: genai-workshop (Auto Mode, k8s v1.36)</text>
+
+  <!-- Always-on nodes -->
+  <rect x="40" y="90" width="330" height="110" rx="8" fill="#eef7ee" stroke="#2ca02c" stroke-width="1.5"/>
+  <text x="54" y="110" font-weight="bold" fill="#2ca02c">Always-on nodes (cheap, CPU)</text>
+  <rect x="54" y="122" width="140" height="60" rx="6" fill="#ffffff" stroke="#2ca02c"/>
+  <text x="124" y="148" text-anchor="middle">system node</text>
+  <text x="124" y="166" text-anchor="middle" fill="#555">c6g.large (arm64)</text>
+  <rect x="212" y="122" width="145" height="60" rx="6" fill="#ffffff" stroke="#2ca02c"/>
+  <text x="284" y="148" text-anchor="middle">general-purpose</text>
+  <text x="284" y="166" text-anchor="middle" fill="#555">c6a.large (amd64)</text>
+
+  <!-- GPU pool -->
+  <rect x="400" y="90" width="320" height="110" rx="8" fill="#fff3e8" stroke="#ff7f0e" stroke-width="1.5"/>
+  <text x="414" y="110" font-weight="bold" fill="#ff7f0e">GPU NodePool (capacity = 1)</text>
+  <rect x="414" y="122" width="292" height="60" rx="6" fill="#ffffff" stroke="#ff7f0e"/>
+  <text x="560" y="146" text-anchor="middle">g6e.2xlarge — NVIDIA L40S 48GB</text>
+  <text x="560" y="166" text-anchor="middle" fill="#b35300">appears ON DEMAND (nvidia.com/gpu:1)</text>
+
+  <!-- monitoring -->
+  <rect x="40" y="220" width="680" height="80" rx="8" fill="#f6f0fb" stroke="#8e5bbf" stroke-width="1.5"/>
+  <text x="54" y="240" font-weight="bold" fill="#8e5bbf">monitoring namespace</text>
+  <rect x="54" y="250" width="150" height="38" rx="6" fill="#fff" stroke="#8e5bbf"/><text x="129" y="274" text-anchor="middle">Prometheus</text>
+  <rect x="220" y="250" width="150" height="38" rx="6" fill="#fff" stroke="#8e5bbf"/><text x="295" y="274" text-anchor="middle">Grafana</text>
+  <rect x="386" y="250" width="150" height="38" rx="6" fill="#fff" stroke="#8e5bbf"/><text x="461" y="274" text-anchor="middle">DCGM GPU metrics</text>
+  <rect x="552" y="250" width="156" height="38" rx="6" fill="#fff" stroke="#8e5bbf"/><text x="630" y="274" text-anchor="middle">S3 CSI driver</text>
+
+  <!-- Karpenter + S3 -->
+  <rect x="40" y="320" width="330" height="56" rx="8" fill="#eaf3fb" stroke="#2a6ebb"/>
+  <text x="54" y="342" font-weight="bold" fill="#2a6ebb">Karpenter</text>
+  <text x="54" y="362" fill="#333">provisions GPU node when a GPU pod is Pending (~2 min)</text>
+
+  <rect x="400" y="320" width="320" height="56" rx="8" fill="#fdeeee" stroke="#d62728"/>
+  <text x="414" y="342" font-weight="bold" fill="#d62728">Amazon S3</text>
+  <text x="414" y="362" fill="#333">Ministral-3-8B weights (9.7 GiB) — mounted via S3 CSI</text>
+
+  <!-- arrows -->
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#555"/></marker></defs>
+  <line x1="205" y1="348" x2="412" y2="166" stroke="#555" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#a)"/>
+  <line x1="560" y1="320" x2="560" y2="184" stroke="#555" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#a)"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <rect width="760" height="430" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#232f3e">Module 100 — Serve an LLM with vLLM</text>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#2a6ebb"/></marker>
+  <marker id="d" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#999"/></marker></defs>
+
+  <rect x="300" y="55" width="160" height="48" rx="8" fill="#eaf3fb" stroke="#2a6ebb"/><text x="380" y="84" text-anchor="middle">User (browser)</text>
+  <rect x="300" y="128" width="160" height="48" rx="8" fill="#fff3e8" stroke="#ff7f0e"/><text x="380" y="150" text-anchor="middle">AWS ALB</text><text x="380" y="167" text-anchor="middle" fill="#b35300">public URL</text>
+  <rect x="290" y="200" width="180" height="52" rx="8" fill="#eef7ee" stroke="#2ca02c"/><text x="380" y="222" text-anchor="middle">Open WebUI pod</text><text x="380" y="240" text-anchor="middle" fill="#555">chat UI (CPU node)</text>
+  <rect x="300" y="278" width="160" height="44" rx="8" fill="#f2f8fd" stroke="#2a6ebb"/><text x="380" y="305" text-anchor="middle">Service: vllm-serve-svc</text>
+  <rect x="285" y="346" width="190" height="56" rx="8" fill="#fff3e8" stroke="#ff7f0e" stroke-width="2"/><text x="380" y="368" text-anchor="middle" font-weight="bold">vLLM pod (mistral)</text><text x="380" y="386" text-anchor="middle" fill="#b35300">on GPU node — L40S</text>
+
+  <rect x="560" y="346" width="175" height="56" rx="8" fill="#fdeeee" stroke="#d62728"/><text x="647" y="368" text-anchor="middle">S3: Ministral-3-8B</text><text x="647" y="386" text-anchor="middle" fill="#a00">runai_streamer</text>
+  <rect x="560" y="200" width="175" height="52" rx="8" fill="#eaf3fb" stroke="#2a6ebb"/><text x="647" y="222" text-anchor="middle">Karpenter</text><text x="647" y="240" text-anchor="middle" fill="#555">boots g6e (~2min)</text>
+
+  <line x1="380" y1="103" x2="380" y2="126" stroke="#2a6ebb" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="380" y1="176" x2="380" y2="198" stroke="#2a6ebb" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="380" y1="252" x2="380" y2="276" stroke="#2a6ebb" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="380" y1="322" x2="380" y2="344" stroke="#2a6ebb" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="475" y1="374" x2="558" y2="374" stroke="#d62728" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="647" y1="252" x2="470" y2="372" stroke="#999" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#d)"/>
+  <text x="500" y="300" fill="#777" font-size="11">pod Pending → node</text>
+
+  <text x="40" y="420" fill="#2ca02c" font-size="12">VERIFIED: pod 1/1 Running; "what is EKS?" answered (40 tokens); ALB open-webui-ingress-250855362.us-east-2.elb.amazonaws.com</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" font-family="Segoe UI, Arial, sans-serif" font-size="13">
+  <rect width="760" height="420" fill="#ffffff"/>
+  <text x="380" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#232f3e">Module 300 — Benchmark the LLM</text>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#2a6ebb"/></marker></defs>
+
+  <rect x="40" y="70" width="220" height="90" rx="8" fill="#f6f0fb" stroke="#8e5bbf" stroke-width="1.5"/>
+  <text x="150" y="94" text-anchor="middle" font-weight="bold" fill="#8e5bbf">Benchmark Job</text>
+  <text x="150" y="116" text-anchor="middle" fill="#333">inference-perf v0.6.1</text>
+  <text x="150" y="136" text-anchor="middle" fill="#555">synthetic: 512 in / 128 out</text>
+
+  <rect x="320" y="78" width="180" height="74" rx="8" fill="#f2f8fd" stroke="#2a6ebb"/><text x="410" y="104" text-anchor="middle">vllm-serve-svc:8000</text><text x="410" y="124" text-anchor="middle" fill="#555">optimized vLLM</text><text x="410" y="142" text-anchor="middle" fill="#555">+ prefix caching</text>
+
+  <rect x="560" y="78" width="175" height="74" rx="8" fill="#fff3e8" stroke="#ff7f0e"/><text x="647" y="104" text-anchor="middle">NVIDIA L40S</text><text x="647" y="128" text-anchor="middle" fill="#b35300">GPU inference</text>
+
+  <line x1="260" y1="115" x2="318" y2="115" stroke="#2a6ebb" stroke-width="1.6" marker-end="url(#a)"/><text x="268" y="108" font-size="11">load</text>
+  <line x1="500" y1="115" x2="558" y2="115" stroke="#2a6ebb" stroke-width="1.6" marker-end="url(#a)"/>
+
+  <!-- outputs -->
+  <rect x="320" y="190" width="180" height="50" rx="8" fill="#f6f0fb" stroke="#8e5bbf"/><text x="410" y="214" text-anchor="middle">Prometheus</text><text x="410" y="232" text-anchor="middle" fill="#555">scrape metrics</text>
+  <rect x="320" y="262" width="180" height="50" rx="8" fill="#f6f0fb" stroke="#8e5bbf"/><text x="410" y="286" text-anchor="middle">Grafana dashboard</text><text x="410" y="304" text-anchor="middle" fill="#555">TTFT / TPOT / tps</text>
+  <rect x="40" y="226" width="220" height="50" rx="8" fill="#fdeeee" stroke="#d62728"/><text x="150" y="250" text-anchor="middle">S3: benchmarks/</text><text x="150" y="268" text-anchor="middle" fill="#a00">results JSON</text>
+
+  <line x1="410" y1="152" x2="410" y2="188" stroke="#2a6ebb" stroke-width="1.4" marker-end="url(#a)"/>
+  <line x1="410" y1="240" x2="410" y2="260" stroke="#2a6ebb" stroke-width="1.4" marker-end="url(#a)"/>
+  <line x1="150" y1="160" x2="150" y2="224" stroke="#d62728" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- results box -->
+  <rect x="520" y="200" width="215" height="150" rx="8" fill="#eef7ee" stroke="#2ca02c" stroke-width="1.5"/>
+  <text x="627" y="222" text-anchor="middle" font-weight="bold" fill="#2ca02c">VERIFIED results</text>
+  <text x="534" y="246" fill="#333">60 requests, 0 failures</text>
+  <text x="534" y="268" fill="#333">TTFT mean: 85.9 ms</text>
+  <text x="534" y="290" fill="#333">TPOT mean: 25.1 ms</text>
+  <text x="534" y="312" fill="#333">Out tokens/s: 126.7</text>
+  <text x="534" y="334" fill="#333">In tokens/s: 507.5</text>
+</svg>

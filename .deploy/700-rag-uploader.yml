@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rag-uploader
+spec:
+  serviceAccountName: s3-access-sa
+  restartPolicy: Never
+  containers:
+  - name: uploader
+    image: python:3.11-slim
+    command: ["/bin/bash","-c"]
+    args:
+    - |
+      pip install --no-cache-dir boto3==1.43.43 >/dev/null 2>&1
+      python - <<'PY'
+      import boto3, os
+      s3 = boto3.client("s3", region_name="us-east-2")
+      bucket = "rag-workshop-data-215808926717-us-east-2"
+      key = "samples/electronics.jsonl"
+      s3.upload_file("/data/electronics.jsonl", bucket, key)
+      print(f"Uploaded to s3://{bucket}/{key}")
+      # verify
+      head = s3.head_object(Bucket=bucket, Key=key)
+      print("Size:", head["ContentLength"], "bytes")
+      PY
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+  - name: data
+    configMap:
+      name: rag-electronics-data

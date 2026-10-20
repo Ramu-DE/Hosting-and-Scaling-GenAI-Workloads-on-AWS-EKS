@@ -1,0 +1,14 @@
+# Environment / secrets — never commit (contains AWS credentials)
+.env
+.env.*
+*.pem
+*.key
+
+# Local kube/aws state
+.kube/
+.aws/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
