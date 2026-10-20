@@ -12,3 +12,6 @@
 .DS_Store
 Thumbs.db
 *.swp
+
+# Local-only (kept on disk, excluded from repo)
+linkedin-series/
